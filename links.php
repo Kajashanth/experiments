@@ -8,7 +8,7 @@
 
 <?php
 
-require_once "database.php";
+include "database.php";
 
 if(isset($_POST['submit']))
 {
@@ -24,7 +24,7 @@ if(isset($_POST['submit']))
 
 	$insert = "INSERT INTO experiment_subject (subject_id, experiment_id, date) VALUES ('$subject_id', '$experiment_id', now())";
 
-	if (mysql_query($insert) or die (mysql_error())){
+	if (mysqli_query($init, $insert)){
     		echo "Link inserted";
 	}
 }
@@ -32,17 +32,17 @@ else
 {
 ?>
 <div class="container">
-		<form action="link.php" method="POST">
+		<form action="links.php" method="POST">
 <?php
 	$experiments = "SELECT * FROM experiments ORDER BY id";
-	$query_experiments = mysql_query($experiments) or die (mysql_error());
+	$query_experiments = mysqli_query($init, $experiments);
 
-	if(mysql_num_rows($query_experiments) > 0)
+	if(mysqli_num_rows($query_experiments) > 0)
 	{
 		echo "<div class='form-group'>";
 		echo "Experiment:<br>";
 		echo "<select name='experiment_id'>";
-		while($row = mysql_fetch_array($query_experiments))
+		while($row = mysqli_fetch_array($query_experiments))
 		{
 			$value = stripslashes($row['id']);
 			$description = stripslashes($row['code']) . ' - ' . stripslashes($row['title']);
@@ -54,14 +54,14 @@ else
 
 <?php
 	$subjects = "SELECT * FROM subjects ORDER BY id";
-	$query_subjects = mysql_query($subjects) or die (mysql_error());
+	$query_subjects = mysqli_query($init, $subjects);
 
-	if(mysql_num_rows($query_subjects) > 0)
+	if(mysqli_num_rows($query_subjects) > 0)
 	{
 		echo "<div class='form-group'>";
 		echo "Subject:<br>";
 		echo "<select name='subject_id'>";
-		while($row = mysql_fetch_array($query_subjects))
+		while($row = mysqli_fetch_array($query_subjects))
 		{
 			$value = stripslashes($row['id']);
 			$description = stripslashes($row['name']) . ' ' . stripslashes($row['surname']);

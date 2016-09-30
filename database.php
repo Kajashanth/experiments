@@ -4,7 +4,8 @@ $dbhost = "localhost";
 $dbname = "test";
 $dbuser = "root";
 $dbpass = "password";
-$connect = mysql_connect($dbhost, $dbuser, $dbpass) or die (mysql_error());
-mysql_select_db($dbname) or die (mysql_error());
-
-?>
+global $init;
+global $connect;
+$init = mysqli_init();
+$connect = mysqli_real_connect($init, $dbhost, $dbuser, $dbpass);
+mysqli_select_db($init, $dbname);

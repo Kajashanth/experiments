@@ -8,7 +8,7 @@
 
 <?php
 
-require_once "database.php";
+include "database.php";
 
 if(isset($_POST['submit']))
 {
@@ -29,7 +29,7 @@ if(isset($_POST['submit']))
 
 	$insert = "INSERT INTO subjects (cf, name, surname) VALUES ('$cf', '$name', '$surname')";
 
-	if (mysql_query($insert) or die (mysql_error())){
+	if (mysqli_real_query($init, $insert)){
     		echo "Subject inserted";
 	}
 }

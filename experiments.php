@@ -7,8 +7,7 @@
 		<h1>Insert new experiment</h1>
 
 <?php
-
-require_once "database.php";
+include "database.php";
 
 if(isset($_POST['submit']))
 {
@@ -29,7 +28,7 @@ if(isset($_POST['submit']))
 
 	$insert = "INSERT INTO experiments (code, title, amount) VALUES ('$code', '$title', '$amount')";
 
-	if (mysql_query($insert) or die (mysql_error())){
+	if (mysqli_query($init, $insert)){
     		echo "Experiment inserted";
 	}
 }

@@ -8,17 +8,17 @@
 		<h1 class="text-center">IIT Experiments</h1>
 <?php
 
-require_once "database.php";
+include "database.php";
 
 $experiments = "SELECT * FROM experiments ORDER BY id";
-$query_experiments = mysql_query($experiments) or die (mysql_error());
+$query_experiments = mysqli_query($init, $experiments);
 
-if(mysql_num_rows($query_experiments) > 0)
+if(mysqli_num_rows($query_experiments) > 0)
 {
 ?>
 		<h2>Experiments</h2>
 <?php
-		while($row = mysql_fetch_array($query_experiments))
+		while($row = mysqli_fetch_array($query_experiments))
 		{
 			$experiment_code = stripslashes($row['code']);
 			$experiment_title = stripslashes($row['title']);
@@ -32,14 +32,14 @@ if(mysql_num_rows($query_experiments) > 0)
 }
 
 $subjects = "SELECT * FROM subjects ORDER BY id";
-$query_subjects = mysql_query($subjects) or die (mysql_error());
+$query_subjects = mysqli_query($init, $subjects);
 
-if(mysql_num_rows($query_subjects) > 0)
+if(mysqli_num_rows($query_subjects) > 0)
 {
 ?>
 		<h2>Subjects</h2>
 <?php
-		while($row = mysql_fetch_array($query_subjects))
+		while($row = mysqli_fetch_array($query_subjects))
 		{
 			$subject_cf = stripslashes($row['cf']);
 			$subject_name = stripslashes($row['name']);
@@ -52,14 +52,14 @@ if(mysql_num_rows($query_subjects) > 0)
 }
 
 $links = "SELECT subjects.cf, experiments.code, experiment_subject.date FROM subjects INNER JOIN experiment_subject ON (subjects.id = experiment_subject.subject_id) INNER JOIN experiments ON (experiment_subject.experiment_id = experiments.id) ORDER BY experiment_subject.date DESC";
-$query_links = mysql_query($links) or die (mysql_error());
+$query_links = mysqli_query($init, $links);
 
-if(mysql_num_rows($query_links) > 0)
+if(mysqli_num_rows($query_links) > 0)
 {
 ?>
 		<h2>Links</h2>
 <?php
-		while($row = mysql_fetch_array($query_links))
+		while($row = mysqli_fetch_array($query_links))
 		{
 			$link_cf = stripslashes($row['cf']);
 			$link_code = stripslashes($row['code']);
